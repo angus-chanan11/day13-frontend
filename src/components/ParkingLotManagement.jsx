@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { parkCar, fetchCar } from '../apis/api';
+import { parkCar, fetchCar, getParkingLots } from '../apis/api';
 import { ACTION, ParkingContext } from '../context/reducer';
 
 const ParkingLotManagement = () => {
@@ -40,11 +40,15 @@ const ParkingLotManagement = () => {
     } else {
       fetchCar(plateNumber)
         .then((response) => {
-          dispatch({
-            type: ACTION.FETCH,
-            payload: response
-          });
-          setIsLoading(false);
+          getParkingLots()
+            .then((response) => {
+              dispatch({
+                type: ACTION.SET,
+                payload: response
+              })
+              setIsLoading(false);
+            })
+            .catch(() => setIsError(true))
         })
         .catch(() => setIsError(true))
         .finally(() => setIsLoading(false));

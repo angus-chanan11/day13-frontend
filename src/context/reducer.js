@@ -8,7 +8,6 @@ const ParkingContext = createContext(initialState);
 
 export const ACTION = {
     PARK: 'PARK',
-    FETCH: 'FETCH',
     SET: 'SET'
 }
 
@@ -28,8 +27,6 @@ const parkingReducer = (state, action) => {
         return updatedState;
     case ACTION.SET:
       return action.payload;
-    case ACTION.FETCH:
-        return action.payload;
     default:
       return state;
   }
