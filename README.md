@@ -20,3 +20,31 @@ The component should have the below children:
 - a text holder 
     - Value as the plateNumber in props
     - Add a border around the text holder
+
+# ParkingLot
+
+generate a ParkingLot component. The component receive a props which includes the below fields:
+
+- id
+- name
+- capacity
+- tickets (a list of ticket object)
+
+ticket object includes the below fields:
+
+- plateNumber
+- position
+- parkingLot (id of parkingLot, should be same as the parent ParkingLot id)
+
+The component should have the below children (in vertical order):
+
+- a table
+    - containing {capacity} number of cells, split the cells into 3 columns
+    - Each cell is a ParkingSpace component (already implemented, no need to implement the component)
+        - The position of a cell is calculated by ( 3 * {row index} + {column index} )
+        - Fix the length of the cell to be 10 characters long, height to be 3 character high
+        - For each ParkingSpace component, a plateNumber (from the ticket) props should be passed to them IF the cell positon matches with the ticket position
+- a text holder
+    - display the name of parking lot
+
+Make sure BOTH the table and the name display are center aligned
