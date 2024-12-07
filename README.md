@@ -48,3 +48,17 @@ The component should have the below children (in vertical order):
     - display the name of parking lot
 
 Make sure BOTH the table and the name display are center aligned
+
+# ParkingGroup
+
+generate a ParkingGroup component. The component receive a props which includes the below fields:
+
+- parkingLots (a list of parkingLot object)
+
+The component should have the below children:
+
+- a horizontal flex box
+    - Includes {size of parkingLots} ParkingLot component (already implemented, no need to implement the component)
+    - For each ParkingLot component, an unique parkingLot props should be passed to them (decompose the parkingLot into id, name, capacity, tickets when passing)
+    - add spacing between each ParkingLot
+    - align the ParkingLot to center
