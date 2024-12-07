@@ -62,3 +62,22 @@ The component should have the below children:
     - For each ParkingLot component, an unique parkingLot props should be passed to them (decompose the parkingLot into id, name, capacity, tickets when passing)
     - add spacing between each ParkingLot
     - align the ParkingLot to center
+
+# Context
+
+Add parkingLots (list of parkingLot objects) to the context of the app.
+Also, create a reducer that can handle 3 action type: PARK, FETCH, SET. 
+
+For PARK, loop through all parkingLot and check if the parkingLot id matches with the payload "parkingLot" properties. 
+If matches, add the payload to the parkingLot tickets property
+Return all parkingLot at the end
+
+For FETCH and SET, just return the payload
+
+# api
+
+generate an api file that makes calls to localhost:8080 using axios. It contains the below methods:
+
+- parkCar(plateNumber, parkingType) -> POST /api/v1/parking-manager/park
+- fetchCar(plateNumber) -> POST /api/v1/parking-manager/fetch 
+- getParkingLots() -> GET /api/v1/parking-manager/parking-lots
