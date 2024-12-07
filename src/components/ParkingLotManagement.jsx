@@ -7,33 +7,59 @@ const ParkingLotManagement = () => {
   const [parkingType, setParkingType] = useState('Standard');
   const { dispatch } = useContext(ParkingContext);
   const [isError, setIsError] = useState(false);
+  const [isInvalidPlateNumber, setIsInvalidPlateNumber] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handlePark = () => {
     setIsLoading(true);
-    parkCar(plateNumber, parkingType)
-      .then((response) => {
-        dispatch({
-          type: ACTION.PARK,
-          payload: response
-        });
-        setIsLoading(false);
-      })
-      .catch(() => setIsError(true));
+    resetPageStatus();
+    const trimPlateNumber = plateNumber.trim();
+    if (!validatePlateNumber(trimPlateNumber)) {
+      setIsInvalidPlateNumber(true);
+      setIsLoading(false);
+    } else {
+      parkCar(trimPlateNumber, parkingType)
+        .then((response) => {
+          dispatch({
+            type: ACTION.PARK,
+            payload: response
+          });
+        })
+        .catch(() => setIsError(true))
+        .finally(() => setIsLoading(false));
+    }
   };
 
   const handleFetch = () => {
     setIsLoading(true);
-    fetchCar(plateNumber)
-      .then((response) => {
-        dispatch({
-          type: ACTION.FETCH,
-          payload: response
-        });
-        setIsLoading(false);
-      })
-      .catch(() => setIsError(true));
+    resetPageStatus();
+    const trimPlateNumber = plateNumber.trim();
+    if (!validatePlateNumber(trimPlateNumber)) {
+      setIsInvalidPlateNumber(true);
+      setIsLoading(false);
+    } else {
+      fetchCar(plateNumber)
+        .then((response) => {
+          dispatch({
+            type: ACTION.FETCH,
+            payload: response
+          });
+          setIsLoading(false);
+        })
+        .catch(() => setIsError(true))
+        .finally(() => setIsLoading(false));
+    }
   };
+
+  const validatePlateNumber = (plateNumber) => {
+    // check if plateNumber starts with 2 letters and followed by "-" and 4 digits
+    return /^[A-Z]{2}-\d{4}$/.test(plateNumber)
+  }
+
+  const resetPageStatus = () => {
+    setIsError(false);
+    setIsInvalidPlateNumber(false);
+  }
 
   return (
     <>
@@ -44,7 +70,7 @@ const ParkingLotManagement = () => {
             <input
               type="text"
               value={plateNumber}
-              onChange={(e) => setPlateNumber(e.target.value.trim())}
+              onChange={(e) => setPlateNumber(e.target.value)}
             />
           </label>
         </div>
@@ -53,7 +79,7 @@ const ParkingLotManagement = () => {
             Parking Type:
             <select
               value={parkingType}
-              onChange={(e) => setParkingType(e.target.value.trim())}
+              onChange={(e) => setParkingType(e.target.value)}
             >
               <option value="Standard">Standard</option>
               <option value="Smart">Smart</option>
@@ -69,6 +95,7 @@ const ParkingLotManagement = () => {
         </div>
       </div>
       {isError && <div>An error occurs</div>}
+      {isInvalidPlateNumber && <div>Invalid plate number</div>}
     </>
   );
 };
