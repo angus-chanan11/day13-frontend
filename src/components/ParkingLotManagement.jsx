@@ -15,7 +15,7 @@ const ParkingLotManagement = () => {
   };
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div style={{ marginRight: '10px' }}>
         <label>
           Plate Number:
