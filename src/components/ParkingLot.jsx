@@ -13,14 +13,11 @@ const ParkingLot = ({ id, name, capacity, tickets }) => {
   });
 
   // Generate the cells for the table
-  for (let i = 0; i < capacity; i++) {
-    const rowIndex = Math.floor(i / 3);
-    const columnIndex = i % 3;
-    const position = 3 * rowIndex + columnIndex;
+  for (let position = 0; position < capacity; position++) {
     const plateNumber = ticketMap.get(position) || ' ';
 
     parkingSpaces.push(
-      <td key={i} style={{ width: '10ch', height: '3em', textAlign: 'center', border: '1px solid black' }}>
+      <td key={position} style={{ width: '10ch', height: '3em', textAlign: 'center', border: '1px solid black' }}>
         <ParkingSpace plateNumber={plateNumber} />
       </td>
     );
@@ -49,14 +46,14 @@ const ParkingLot = ({ id, name, capacity, tickets }) => {
 };
 
 ParkingLot.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   capacity: PropTypes.number.isRequired,
   tickets: PropTypes.arrayOf(
     PropTypes.shape({
       plateNumber: PropTypes.string.isRequired,
       position: PropTypes.number.isRequired,
-      parkingLot: PropTypes.string.isRequired,
+      parkingLot: PropTypes.number.isRequired,
     })
   ).isRequired,
 };
